@@ -47,7 +47,6 @@ func reapChildren(config Config) {
 
 	for {
 		var sig = <-notifications
-		fmt.Printf(" - Received signal %v\n", sig)
 		for {
 			var wstatus syscall.WaitStatus
 
@@ -63,10 +62,6 @@ func reapChildren(config Config) {
 			if syscall.ECHILD == err {
 				break
 			}
-
-			fmt.Printf(" - Grim reaper cleanup: pid=%d, wstatus=%+v\n",
-				pid, wstatus)
-
 		}
 	}
 
@@ -109,7 +104,7 @@ func Start(config Config) {
 	if !config.DisablePid1Check {
 		mypid := os.Getpid()
 		if 1 != mypid {
-			fmt.Printf(" - Grim reaper disabled, pid not 1\n")
+			fmt.Printf("Grim reaper disabled, PID is not 1\n")
 			return
 		}
 	}
